@@ -9,10 +9,15 @@
 
 import argparse
 import os
+
+# Set environment variables before any MLflow imports
+os.environ['MLFLOW_REGISTRY_URI'] = ''
+os.environ['DISABLE_MLFLOW_INTEGRATION'] = 'TRUE'
+
 import pandas as pd
 import numpy as np
-import mlflow
-import mlflow.sklearn
+#import mlflow
+import joblib
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
@@ -21,13 +26,10 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
-def main(args):
+def main(args):    
 
     if not os.path.exists(args.data_path):
-        raise FileNotFoundError(f"Data file not found: {args.data_path}")
-
-    # Start MLflow run
-    mlflow.start_run()
+        raise FileNotFoundError(f"Data file not found: {args.data_path}")          
 
     print("Loading data...")
     df = pd.read_csv(args.data_path)
@@ -53,7 +55,7 @@ def main(args):
     categorical_transformer = OneHotEncoder(handle_unknown="ignore")
 
     preprocessor = ColumnTransformer(
-        transformers=[
+    transformers=[
             ("num", numeric_transformer, numeric_cols),
             ("cat", categorical_transformer, categorical_cols)
         ]
@@ -79,22 +81,23 @@ def main(args):
     print(f"Accuracy: {accuracy}")
     print(f"Precision: {precision}")
     print(f"Recall: {recall}")
-    print(f"F1 Score: {f1}")
-
-    # Log metrics to MLflow
-    mlflow.log_metric("accuracy", accuracy)
-    mlflow.log_metric("precision", precision)
-    mlflow.log_metric("recall", recall)
-    mlflow.log_metric("f1_score", f1)
+    print(f"F1 Score: {f1}")    
+                
 
     # Save model
     os.makedirs(args.output_dir, exist_ok=True)
     model_path = os.path.join(args.output_dir, "model.joblib")
+ 
+    print(f"Saving model to {model_path}")
+    
+    try:
+        joblib.dump(model, model_path)
+        print("Model saved successfully")
+    except Exception as e:
+        print(f"ERROR saving model: {str(e)}")
+        raise
 
-    mlflow.sklearn.save_model(model, model_path)
-    print(f"Model saved to {model_path}")
-
-    mlflow.end_run()
+    print("Training completed successfully")
 
 
 def clean_telco_data(df):

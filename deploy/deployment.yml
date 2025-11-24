@@ -1,0 +1,18 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: telco-cust-churn-model-deploy
+endpoint_name: telco-customer-churn-endpoint
+
+model:
+  name: telco-customerchurn-model
+  version: 1
+
+environment:
+  conda_file: ../environment.yml
+  image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest
+
+code_configuration:
+  code: ../
+  scoring_script: src/score.py
+
+instance_type: Standard_F2s_v2
+instance_count: 1
