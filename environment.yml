@@ -1,0 +1,14 @@
+name: telco-customerchurn-env
+channels:
+  - conda-forge  
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+    - scikit-learn==1.7.2
+    - pandas
+    - numpy
+    - joblib
+    - azureml-defaults
+    - azureml-inference-server-http
+    - inference-schema[numpy-support]

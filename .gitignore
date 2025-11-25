@@ -205,3 +205,23 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# ML outputs
+outputs/
+models/
+artifacts/
+
+# MLflow runs
+mlruns/
+
+# Azure ML logs
+azureml_logs/
+amlrun/
+
+# VSCode config
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
+
