@@ -1,6 +1,7 @@
 $schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
-name: telco-churn-env
-version: 1
+name: telco-customer-churn-env3
+description: Environment for telco customer churn prediction deployment
+version: 4
 image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest
 
 conda_file: environment.yml

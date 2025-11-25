@@ -1,3 +1,4 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineEndpoint.schema.json
 name: telco-customer-churn-endpoint
+description: Endpoint for telco customer churn prediction
 auth_mode: key

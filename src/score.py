@@ -1,3 +1,10 @@
+# Score script that uses the trained model to make predictions.
+# This script is used by Azure ML for deploying the model as a web service.
+# It defines two main functions: init() and run().
+# init() is called once when the service starts to load the model.
+# run() is called for each request to make predictions.
+# Can use this script for local testing as well. Just point to the local model file as fallback when AZUREML_MODEL_DIR is not set.
+
 import os
 import json
 import joblib
@@ -43,14 +50,14 @@ def init():
     """
     global model
 
-    # AzureML sets this env var to the folder where the registered model is mounted
+    # AzureML sets this env var to the folder where the registered model is mounted. Empty if running locally.
     model_dir = os.getenv("AZUREML_MODEL_DIR")
-    print(f"AZUREML_MODEL_DIR: {model_dir}")
+    print(f"AZUREML_MODEL_DIR: {model_dir}")   # /var/azureml-app/azureml-models/xyz-model/1
 
-    if model_dir:
+    if model_dir:                                 # Model is running as a service in AzureML
         model_path = os.path.join(model_dir, "model.joblib")
-    else:
-        # Fallback for local testing (adjust if needed)
+    else:                                         # Model is stored locally
+        # Fallback for local testing
         model_path = os.path.join("outputs", "model.joblib")
 
     if not os.path.exists(model_path):
