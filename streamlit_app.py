@@ -14,6 +14,13 @@ headers = {
     "Authorization": f"Bearer {API_KEY}"
 }
 
+st.set_page_config(
+    page_title="Telco Customer Churn Predictor",
+    page_icon="📞",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 # Sidebar with app information
 st.sidebar.header("📋 About This App")
 st.sidebar.markdown("""
