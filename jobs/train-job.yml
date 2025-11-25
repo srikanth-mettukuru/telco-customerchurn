@@ -1,0 +1,30 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+type: command
+
+experiment_name: telco-customerchurn-training
+
+code: ..                 # root of your project
+command: >-
+  python src/train.py
+  --data-path ${{inputs.training_data}}
+  --output-dir ${{outputs.model_output}}
+
+environment:
+  name: churn-env
+  image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest
+  conda_file: ../environment.yml
+
+inputs:
+  training_data:
+    type: uri_file
+    path: ../data/telco_churn_data.csv
+
+outputs:
+  model_output:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/outputs/model_output
+
+compute: telco-customerchurn-cluster
+
+display_name: churn_train_job
+description: Train baseline churn prediction model using scikit-learn
