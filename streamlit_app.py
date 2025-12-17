@@ -36,6 +36,7 @@ st.sidebar.markdown("""
 - **Language**: Python
 
 ### **Deployment**
+- **Model Testing**: Azure ML Endpoint
 - **Model Hosting**: Azure Container App
 
 ### **Frontend**
