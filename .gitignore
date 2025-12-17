@@ -225,3 +225,5 @@ amlrun/
 .DS_Store
 Thumbs.db
 
+# ML model artifacts
+model/**
