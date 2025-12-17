@@ -51,6 +51,7 @@ telco-customerchurn/
 ├── src/
 │   ├── train.py                    # Model training script
 │   ├── score.py                    # Model scoring script   
+│   ├── api.py                      # Inference API using FastAPI  
 |
 ├── outputs/
 │   └── model.joblib               # Trained model file for local testing
@@ -59,6 +60,7 @@ telco-customerchurn/
 │   └── sample_record.json         # Sample test data
 │   └── test_local.py              # Script for local testing
 │   └── test_endpoint.py           # Script for Azure ML endpoint testing
+│   └── test_api.py                # Script for Inference API testing
 |
 ├── deploy/
 │   └── deployment.yml             # Azure ML deployment configuration

@@ -6,13 +6,7 @@ import os
 
 dotenv.load_dotenv()
 
-SCORING_URI = os.getenv("AZURE_ML_SCORING_URI")
-API_KEY = os.getenv("AZURE_ML_PRIMARY_KEY")
-
-headers = {
-    "Content-Type": "application/json",
-    "Authorization": f"Bearer {API_KEY}"
-}
+API_URL = os.getenv("API_URL")
 
 st.set_page_config(
     page_title="Telco Customer Churn Predictor",
@@ -42,8 +36,8 @@ st.sidebar.markdown("""
 - **Language**: Python
 
 ### **Deployment**
-- **Cloud Platform**: Microsoft Azure ML
-- **Model Hosting**: Azure ML Endpoints
+- **Model Testing**: Azure ML Endpoint
+- **Model Hosting**: Azure Container App
 
 ### **Frontend**
 - **Framework**: Streamlit
@@ -109,7 +103,11 @@ if st.button("Predict"):
 
     
     try:
-        response = requests.post(SCORING_URI, data=json.dumps(payload), headers=headers)
+        response = requests.post(f"{API_URL}/predict",
+                                 json=payload,
+                                 headers={"Content-Type": "application/json"},
+                                 timeout=30)
+        
         print(response.json())
 
         if response.status_code == 200:
