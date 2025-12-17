@@ -17,3 +17,7 @@ data/raw/
 README.md
 notebooks/
 *.md
+fly.toml
+__pycache__/
+.envrc
+Dockerfile*
